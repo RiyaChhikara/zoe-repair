@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="light">
   <meta name="theme-color" content="#ffffff">
   <title>How repairable is your phone?</title>
-  <meta name="description" content="Three short questions about whether you can open, fix, and keep your phone.">
+  <meta name="description" content="Nine short questions about whether you can open, fix, and keep your phone.">
   <meta property="og:title" content="How repairable is your phone?">
   <meta property="og:description" content="A short quiz. For official phone-by-phone breakdowns, see iFixit.">
   <meta property="og:type" content="website">
@@ -44,12 +44,7 @@
       letter-spacing: -0.04em;
       line-height: 1.02;
     }
-    .intro {
-      max-width: 36rem;
-      margin: 1rem 0 0;
-    }
-    .intro[hidden] { display: none; }
-    .intro a, footer a { color: #111; }
+    footer a { color: #111; }
     main { margin-top: 2.5rem; }
     h2 {
       margin: 0 0 1rem;
@@ -134,9 +129,8 @@
 <body>
   <div class="page">
     <p class="label">How repairable is your phone?</p>
-    <p class="label" id="step">1 of 3</p>
-    <h1 id="title">Can you open it and take the battery out?</h1>
-    <p class="intro" id="intro">Three questions about the phone in your hand.</p>
+    <p class="label" id="step">1 of 9</p>
+    <h1 id="title">Can you open the phone without breaking something else?</h1>
     <main id="stage"></main>
     <footer>
       <p>For an official breakdown of a specific phone, see <a href="https://www.ifixit.com/repairability/smartphone-repairability-scores">iFixit’s smartphone repairability scores</a>. This quiz does not score individual phones.</p>
@@ -146,30 +140,84 @@
   <script>
     const QUESTIONS = [
       {
-        title: "Can you open it and take the battery out?",
+        title: "Can you open the phone without breaking something else?",
         options: [
-          { id: "yes", label: "Yes", note: "It opens, and the battery comes out." },
-          { id: "some", label: "I can open it, but the battery is stuck", note: "The battery is stuck in place." },
-          { id: "no", label: "No", note: "Getting the battery out is not realistic." },
+          { id: "yes", label: "Yes, with ordinary tools", note: "It opens with ordinary tools." },
+          { id: "some", label: "Yes, but I have to fight glue", note: "Opening it means fighting glue." },
+          { id: "no", label: "No", note: "Opening it risks breaking something else." },
+          { id: "unsure", label: "Not sure", note: "It’s unclear how the phone opens.", unsure: true }
+        ]
+      },
+      {
+        title: "Can you take the battery out and put a new one in?",
+        options: [
+          { id: "yes", label: "Yes, it comes out", note: "The battery comes out." },
+          { id: "some", label: "It’s stuck, but I can reach it", note: "The battery is stuck, but reachable." },
+          { id: "no", label: "No", note: "The battery is not meant to be replaced." },
           { id: "unsure", label: "Not sure", note: "It’s unclear whether the battery comes out.", unsure: true }
         ]
       },
       {
-        title: "Can you replace the screen, and buy the part?",
+        title: "If the screen cracks, is it meant to be replaced?",
         options: [
-          { id: "yes", label: "Yes", note: "The screen can be replaced, and the part is sold." },
-          { id: "some", label: "The part exists, but the job is hard", note: "A screen part exists, but fitting it is hard." },
+          { id: "yes", label: "Yes", note: "The screen is meant to be replaced." },
+          { id: "some", label: "Yes, but it’s a hard job", note: "A screen repair is a hard job." },
           { id: "no", label: "No", note: "A new screen is not a practical repair." },
           { id: "unsure", label: "Not sure", note: "It’s unclear whether the screen can be replaced.", unsure: true }
         ]
       },
       {
-        title: "After a new part is in, does the phone work as before?",
+        title: "Can you buy the spare part from the company that made the phone?",
+        options: [
+          { id: "yes", label: "Yes", note: "The maker sells the spare part." },
+          { id: "some", label: "Only from other sellers", note: "Parts come from other sellers, not the maker." },
+          { id: "no", label: "No", note: "A spare part is hard to buy." },
+          { id: "unsure", label: "Not sure", note: "It’s unclear whether a spare part is sold.", unsure: true }
+        ]
+      },
+      {
+        title: "Is there a clear guide for the repair?",
+        options: [
+          { id: "yes", label: "Yes, from the maker", note: "The maker explains the repair." },
+          { id: "some", label: "Only unofficial guides", note: "The only guides are unofficial." },
+          { id: "no", label: "No", note: "There isn’t a clear guide." },
+          { id: "unsure", label: "Not sure", note: "It’s unclear whether a guide exists.", unsure: true }
+        ]
+      },
+      {
+        title: "If the charging port dies, can you swap just that part?",
+        options: [
+          { id: "yes", label: "Yes, it comes out on its own", note: "The charging port can be swapped on its own." },
+          { id: "some", label: "It’s fiddly, but possible", note: "The charging port can be replaced, but it’s fiddly." },
+          { id: "no", label: "No, it’s stuck to the board", note: "The charging port is stuck to the board." },
+          { id: "unsure", label: "Not sure", note: "It’s unclear whether the charging port can be swapped.", unsure: true }
+        ]
+      },
+      {
+        title: "After a new part goes in, does the phone still work properly?",
         options: [
           { id: "yes", label: "Yes", note: "A new part works." },
           { id: "some", label: "It warns me, then works", note: "A new part works, after a warning." },
-          { id: "no", label: "No. Some features stop", note: "The phone may reject a new part." },
+          { id: "no", label: "Some features stop", note: "The phone may reject a new part." },
           { id: "unsure", label: "Not sure", note: "It’s unclear whether a new part will be accepted.", unsure: true }
+        ]
+      },
+      {
+        title: "Could you do this same repair again in a few years?",
+        options: [
+          { id: "yes", label: "Yes", note: "The repair should still be possible later." },
+          { id: "some", label: "Only if parts are still sold", note: "A later repair depends on parts still being sold." },
+          { id: "no", label: "No", note: "This repair may not be possible in a few years." },
+          { id: "unsure", label: "Not sure", note: "It’s unclear whether the repair will still be possible later.", unsure: true }
+        ]
+      },
+      {
+        title: "When it breaks, is fixing it the obvious choice?",
+        options: [
+          { id: "yes", label: "Yes, I’d repair it", note: "Repair is the obvious next step." },
+          { id: "some", label: "I’d try, then maybe replace it", note: "Repair is worth a try, but replacement is close behind." },
+          { id: "no", label: "No, I’d replace the whole phone", note: "A break would mean a new phone, not a repair." },
+          { id: "unsure", label: "Not sure", note: "It’s unclear whether a break would lead to a repair.", unsure: true }
         ]
       }
     ];
@@ -188,19 +236,19 @@
       const unsure = options.filter((o) => o.unsure).length;
       const nos = options.filter((o) => o.id === "no").length;
       const yes = options.filter((o) => o.id === "yes").length;
-      if (unsure >= 2) {
+      if (unsure >= 4) {
         return {
           title: "Hard to say",
-          line: "Too many answers were not sure. Check whether the battery comes out, and whether you can buy a part."
+          line: "Too many answers were not sure. Check the battery, the screen, and whether you can buy a part."
         };
       }
-      if (nos >= 2) {
+      if (nos >= 4) {
         return {
           title: "Hard to repair",
           line: "A home repair is difficult."
         };
       }
-      if (yes === QUESTIONS.length) {
+      if (yes >= 8 && nos === 0) {
         return {
           title: "Easy to repair",
           line: "You can open it, get a part, and the phone should work after the repair."
@@ -298,7 +346,6 @@
       const result = done ? outcome(chosen()) : null;
       document.getElementById("step").textContent = done ? "Result" : (state.step + 1) + " of " + QUESTIONS.length;
       document.getElementById("title").textContent = done ? result.title : QUESTIONS[state.step].title;
-      document.getElementById("intro").hidden = state.step !== 0;
       document.getElementById("stage").innerHTML = done ? renderResult() : renderQuestion();
       document.title = done ? result.title + " — How repairable is your phone?" : "How repairable is your phone?";
     }
