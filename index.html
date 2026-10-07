@@ -3,736 +3,230 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#06110d">
-  <title>Zoe — How repairable is your phone?</title>
-  <meta name="description" content="A shareable field guide that scores how repairable your phone is, from sealed amber to open meadow.">
-  <meta property="og:title" content="Zoe — How repairable is your phone?">
-  <meta property="og:description" content="A score from 0 to 10 for the life still left in a phone. Look yours up, or answer seven questions.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <title>How repairable is your phone?</title>
+  <meta name="description" content="Three short questions about whether you can open, fix, and keep your phone.">
+  <meta property="og:title" content="How repairable is your phone?">
+  <meta property="og:description" content="A short quiz. For official phone-by-phone breakdowns, see iFixit.">
   <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%2306110d' width='32' height='32' rx='8'/%3E%3Cpath d='M16 26c0-8 1-12 6-18' fill='none' stroke='%23d5f08a' stroke-width='1.4'/%3E%3Cpath d='M16 20c-4-1-7 1-9 0M16 16c4-1 6-4 7-6M16 14c-3-2-5-1-7-3' fill='none' stroke='%239ff5d4' stroke-width='1.2'/%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,620;1,9..144,500;1,9..144,640&family=Outfit:wght@320;420;520;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%23111' width='32' height='32'/%3E%3C/svg%3E">
   <style>
-    :root {
-      --moss: #06110d;
-      --ink: #f3f0e6;
-      --muted: #b7c9bb;
-      --leaf: #d7f29a;
-      --glow: #9ff5d4;
-      --pollen: #f3d7a6;
-      --blush: #f0b7c3;
-      --line: rgba(243, 215, 166, 0.22);
-      --sheet: rgba(7, 22, 17, 0.72);
-      --serif: "Fraunces", "Iowan Old Style", Palatino, Georgia, serif;
-      --sans: "Outfit", "Avenir Next", "Segoe UI", sans-serif;
-    }
     * { box-sizing: border-box; }
-    html { background: var(--moss); }
+    html { background: #fff; }
     body {
       margin: 0;
       min-height: 100vh;
-      color: var(--ink);
-      font-family: var(--sans);
-      font-weight: 420;
+      color: #111;
+      background: #fff;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: 1.05rem;
-      line-height: 1.5;
-      background:
-        radial-gradient(ellipse 55vw 45vw at 88% -8%, rgba(243, 215, 166, 0.22), transparent 70%),
-        radial-gradient(ellipse 48vw 42vw at -10% 100%, rgba(80, 210, 170, 0.16), transparent 68%),
-        radial-gradient(ellipse 40vw 30vw at 70% 110%, rgba(120, 160, 60, 0.14), transparent 70%),
-        var(--moss);
+      line-height: 1.45;
       -webkit-font-smoothing: antialiased;
     }
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.22;
-      mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
-      z-index: 0;
-    }
-    .scene { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-    .mycelium { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.55; }
-    .fern { position: absolute; width: min(280px, 42vw); height: auto; opacity: 0.45; }
-    .fern-left { left: -40px; bottom: -20px; }
-    .fern-right { right: -50px; top: 40px; transform: scaleX(-1); opacity: 0.28; }
-    .spore {
-      position: absolute;
-      bottom: -12px;
-      width: var(--s);
-      height: var(--s);
-      left: var(--x);
-      border-radius: 50%;
-      background: var(--glow);
-      opacity: 0.45;
-      animation: rise var(--d) linear infinite;
-      animation-delay: var(--delay);
-    }
-    @keyframes rise {
-      from { transform: translateY(0); opacity: 0; }
-      12% { opacity: 0.55; }
-      to { transform: translateY(-105vh); opacity: 0; }
-    }
-    .wrap {
-      position: relative;
-      z-index: 1;
-      width: min(1080px, calc(100% - 2rem));
+    .page {
+      width: min(40rem, calc(100% - 2.5rem));
       margin: 0 auto;
-      padding: 1.25rem 0 4rem;
+      padding: 2.5rem 0 4rem;
     }
-    .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .mark {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 560;
-      font-size: 1.85rem;
-      color: var(--pollen);
-      background: none;
-      border: 0;
-      padding: 0;
-      cursor: pointer;
-    }
-    .top-note {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.82rem;
-      letter-spacing: 0.08em;
+    .label {
+      margin: 0 0 0.35rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
     }
-    .kicker {
-      margin: 0 0 0.8rem;
-      color: var(--pollen);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-size: 0.74rem;
-    }
-    h1, h2, .phone-name, .biome-name { font-family: var(--serif); font-weight: 560; letter-spacing: -0.03em; }
+    #step { margin-bottom: 1.1rem; }
     h1 {
       margin: 0;
-      font-size: clamp(3.1rem, 8vw, 6.5rem);
-      line-height: 0.9;
-      font-weight: 560;
+      max-width: 18em;
+      font-size: clamp(2.15rem, 5vw, 3.4rem);
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      line-height: 1.02;
     }
-    h1 em, .biome-name em { font-style: italic; font-weight: 560; color: var(--leaf); }
-    .lede {
-      max-width: 38rem;
-      color: var(--muted);
-      font-size: 1.12rem;
-      margin: 1.25rem 0 0;
+    .intro {
+      max-width: 36rem;
+      margin: 1rem 0 0;
     }
-    .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.6rem; }
-    button, .btn {
-      font-family: var(--sans);
-      cursor: pointer;
+    .intro[hidden] { display: none; }
+    .intro a, footer a { color: #111; }
+    main { margin-top: 2.5rem; }
+    h2 {
+      margin: 0 0 1rem;
+      font-size: clamp(1.7rem, 4vw, 2.15rem);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
     }
-    .btn {
-      border: 1px solid transparent;
-      border-radius: 999px;
-      padding: 0.85rem 1.25rem;
-      font-size: 1rem;
-      font-weight: 520;
-      color: #142016;
-      background: linear-gradient(180deg, #eaf8c8, #c6e57a);
-    }
-    .btn.ghost {
-      color: var(--ink);
-      background: transparent;
-      border-color: var(--line);
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
-    .scale {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 0.4rem;
-      margin-top: 2.4rem;
-      max-width: 46rem;
-    }
-    .scale i {
-      display: block;
-      height: 3px;
-      border-radius: 99px;
-      background: var(--c);
-      opacity: 0.85;
-    }
-    .scale span {
-      display: block;
-      margin-top: 0.4rem;
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .home-grid { display: grid; gap: 1rem; }
-    .relic { justify-self: start; }
-    .relic svg { width: min(220px, 58vw); height: auto; display: block; }
-    .fig {
-      margin: 0.4rem 0 0;
-      color: var(--muted);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-size: 0.68rem;
-    }
-    .sheet {
-      margin-top: 0.5rem;
-      padding: clamp(1.2rem, 3vw, 2rem);
-      border-radius: 28px 42px 30px 36px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015)),
-        var(--sheet);
-      border: 1px solid var(--line);
-      box-shadow: 0 30px 70px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.05);
-      backdrop-filter: blur(14px);
-    }
-    label.seek { display: block; }
-    .seek span {
-      display: block;
-      margin-bottom: 0.45rem;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-    input[type="search"] {
+    .options { display: grid; }
+    .option {
       width: 100%;
+      text-align: left;
+      color: #111;
+      background: #fff;
+      border: 1px solid #111;
+      margin-top: -1px;
+      padding: 0.95rem 1rem;
       font: inherit;
       font-size: 1.05rem;
-      color: var(--ink);
-      background: rgba(0,0,0,0.25);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0.85rem 1.1rem;
+      cursor: pointer;
     }
-    input[type="search"]:focus { outline: 2px solid var(--glow); outline-offset: 2px; }
-    .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.9rem 0; }
-    .chip {
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: transparent;
-      color: var(--muted);
-      padding: 0.35rem 0.7rem;
-      font: inherit;
-      font-size: 0.82rem;
+    .option:hover,
+    .option[aria-pressed="true"] {
+      background: #111;
+      color: #fff;
+      position: relative;
+      z-index: 1;
     }
-    .chip.on { color: #142016; background: var(--leaf); border-color: transparent; }
-    .list { max-height: min(52vh, 460px); overflow: auto; margin-top: 0.3rem; }
-    .group-label {
-      margin: 1rem 0 0.15rem;
-      color: var(--pollen);
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      font-size: 0.68rem;
-    }
-    .phone-row {
-      width: 100%;
+    .nav {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       gap: 1rem;
-      align-items: baseline;
-      text-align: left;
-      background: none;
-      border: 0;
-      border-bottom: 1px solid rgba(243, 215, 166, 0.12);
-      color: inherit;
-      padding: 0.85rem 0.15rem;
+      margin-top: 1.25rem;
+    }
+    .texty, .solid {
       font: inherit;
+      cursor: pointer;
     }
-    .phone-row .name { font-family: var(--serif); font-size: 1.35rem; letter-spacing: -0.02em; }
-    .phone-row .year { color: var(--muted); font-variant-numeric: tabular-nums; }
-    .phone-row:hover .name { color: var(--leaf); }
-    .empty { padding: 1.2rem 0 0.4rem; color: var(--muted); }
-    .q-top { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
-    .step-no { color: var(--muted); font-variant-numeric: tabular-nums; letter-spacing: 0.12em; font-size: 0.78rem; }
-    .vine { display: flex; gap: 0.35rem; margin: 0.8rem 0 1.2rem; }
-    .vine b {
-      flex: 1;
-      height: 3px;
-      border-radius: 99px;
-      background: rgba(243, 215, 166, 0.18);
-    }
-    .vine b.on { background: var(--leaf); }
-    h2 { margin: 0; font-size: clamp(2rem, 5vw, 3.3rem); line-height: 1.02; }
-    .hint { color: var(--muted); margin: 0.7rem 0 1.1rem; }
-    .options { display: grid; gap: 0.55rem; }
-    .option {
-      text-align: left;
-      color: var(--ink);
-      background: rgba(0,0,0,0.18);
-      border: 1px solid rgba(243, 215, 166, 0.14);
-      border-radius: 18px 22px 16px 20px;
-      padding: 0.9rem 1rem;
-      font: inherit;
-      font-size: 1.02rem;
-      line-height: 1.35;
-    }
-    .option:hover, .option[aria-pressed="true"] {
-      border-color: rgba(215, 242, 154, 0.7);
-      background: rgba(215, 242, 154, 0.1);
-    }
-    .option small {
-      display: block;
-      margin-bottom: 0.15rem;
-      color: var(--pollen);
-      letter-spacing: 0.14em;
-      font-size: 0.68rem;
-    }
-    .row-nav { display: flex; justify-content: space-between; margin-top: 1.1rem; }
     .texty {
       background: none;
       border: 0;
-      color: var(--pollen);
       padding: 0.4rem 0;
-      font: inherit;
+      color: #111;
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
     }
-    .texty:disabled { opacity: 0.35; cursor: not-allowed; }
-    .result-head { display: grid; gap: 1rem; }
-    .ring-wrap { position: relative; width: 210px; height: 210px; }
-    .ring-wrap svg { width: 100%; height: 100%; }
-    .ring-label {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-content: center;
-      text-align: center;
+    .texty:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      text-decoration: none;
     }
-    .ring-label strong {
-      font-family: var(--serif);
-      font-weight: 560;
-      font-size: 3.4rem;
-      letter-spacing: -0.04em;
-      line-height: 0.9;
+    .solid {
+      color: #fff;
+      background: #111;
+      border: 1px solid #111;
+      padding: 0.8rem 1rem;
     }
-    .ring-label span { color: var(--muted); font-size: 0.85rem; }
-    .progress {
-      fill: none;
-      stroke: var(--biome);
-      stroke-width: 8;
-      stroke-linecap: round;
-      stroke-dasharray: 534;
-      stroke-dashoffset: calc(534 * (1 - var(--p)));
-      transition: stroke-dashoffset 0.9s ease;
-    }
-    .biome-name { margin: 0.2rem 0 0; font-size: clamp(2.4rem, 6vw, 4rem); line-height: 0.95; }
-    .latin { margin: 0.35rem 0 0; letter-spacing: 0.2em; text-transform: uppercase; color: var(--pollen); font-size: 0.72rem; }
-    .poem { font-family: var(--serif); font-style: italic; font-size: 1.25rem; line-height: 1.35; margin: 0.8rem 0 0; }
-    .notes { padding: 0; margin: 1rem 0 0; list-style: none; }
-    .notes li {
-      padding: 0.7rem 0;
-      border-top: 1px solid rgba(243, 215, 166, 0.14);
-      color: var(--ink);
-    }
-    .bars { margin-top: 1.2rem; display: grid; gap: 0.55rem; }
-    .bar-row { display: grid; grid-template-columns: 7.2rem 1fr auto; gap: 0.6rem; align-items: center; font-size: 0.85rem; }
-    .track { height: 6px; border-radius: 99px; background: rgba(255,255,255,0.08); overflow: hidden; }
-    .track span { display: block; height: 100%; width: calc(var(--v) * 100%); background: linear-gradient(90deg, var(--glow), var(--leaf)); border-radius: inherit; }
-    .pts { color: var(--muted); font-variant-numeric: tabular-nums; }
-    .cut { color: var(--blush); }
-    details { margin-top: 1rem; color: var(--muted); }
-    summary { cursor: pointer; color: var(--pollen); }
-    .share { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.2rem; }
+    .solid:hover { background: #fff; color: #111; }
+    .note { margin: 0.8rem 0 0; max-width: 36rem; }
     footer {
-      position: relative;
-      z-index: 1;
-      width: min(1080px, calc(100% - 2rem));
-      margin: 0 auto 2rem;
-      color: var(--muted);
-      font-size: 0.88rem;
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid #111;
+      max-width: 36rem;
     }
-    footer a { color: var(--glow); }
     #toast {
       position: fixed;
-      z-index: 5;
-      left: 50%;
-      bottom: 1.2rem;
-      transform: translateX(-50%) translateY(12px);
-      background: var(--leaf);
-      color: #142016;
-      border-radius: 999px;
-      padding: 0.55rem 0.9rem;
-      font-size: 0.9rem;
+      left: 1rem;
+      bottom: 1rem;
+      background: #111;
+      color: #fff;
+      padding: 0.55rem 0.75rem;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease;
     }
-    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0,0,0,0);
-      border: 0;
-    }
-    :focus-visible { outline: 2px solid var(--glow); outline-offset: 3px; }
-    ::selection { background: var(--leaf); color: #102016; }
-    @media (min-width: 900px) {
-      .wrap { padding-top: 1.8rem; }
-      .home-grid { grid-template-columns: minmax(0, 1.35fr) minmax(220px, 0.55fr); align-items: end; gap: 2rem; }
-      .relic { justify-self: end; }
-      .result-head { grid-template-columns: 210px 1fr; align-items: center; gap: 1.6rem; }
-    }
-    @media (max-width: 640px) {
-      .top-note { display: none; }
-      .scale span { font-size: 0.58rem; letter-spacing: 0.02em; }
-      .bar-row { grid-template-columns: 5.6rem 1fr auto; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation: none !important;
-        transition: none !important;
-      }
-    }
+    #toast.show { opacity: 1; }
+    :focus-visible { outline: 2px solid #111; outline-offset: 3px; }
+    ::selection { background: #111; color: #fff; }
   </style>
 </head>
 <body>
-  <div class="scene" aria-hidden="true">
-    <svg class="mycelium" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
-      <g fill="none" stroke="rgba(190,230,170,0.25)" stroke-width="1.1">
-        <path d="M-20 520 C 180 480, 260 640, 430 540 S 760 390, 980 520 1220 450 1220 450"/>
-        <path d="M40 180 C 260 250, 340 80, 540 170 S 860 320, 1180 140"/>
-        <path d="M200 700 C 320 620, 480 760, 640 650 S 900 560, 1100 690"/>
-      </g>
-    </svg>
-    <svg class="fern fern-left" viewBox="0 0 220 460">
-      <g fill="none" stroke="#b7d98a" stroke-width="1.15">
-        <path d="M130 450 C 120 320, 110 210, 78 30"/>
-        <path d="M122 390 C 70 370, 30 392, 12 360"/>
-        <path d="M118 350 C 168 328, 196 300, 184 258"/>
-        <path d="M112 310 C 62 292, 28 308, 18 276"/>
-        <path d="M106 270 C 156 248, 188 214, 170 176"/>
-        <path d="M100 230 C 58 214, 30 226, 24 196"/>
-        <path d="M92 186 C 132 168, 156 140, 142 112"/>
-        <path d="M86 146 C 54 132, 36 142, 32 118"/>
-        <path d="M80 104 C 108 90, 122 70, 112 48"/>
-      </g>
-    </svg>
-    <svg class="fern fern-right" viewBox="0 0 220 460">
-      <g fill="none" stroke="#9ff5d4" stroke-width="1.05">
-        <path d="M130 450 C 120 320, 110 210, 78 30"/>
-        <path d="M122 390 C 70 370, 30 392, 12 360"/>
-        <path d="M118 350 C 168 328, 196 300, 184 258"/>
-        <path d="M112 310 C 62 292, 28 308, 18 276"/>
-        <path d="M106 270 C 156 248, 188 214, 170 176"/>
-        <path d="M100 230 C 58 214, 30 226, 24 196"/>
-      </g>
-    </svg>
-    <i class="spore" style="--x:8%;--s:3px;--d:18s;--delay:-4s"></i>
-    <i class="spore" style="--x:22%;--s:2px;--d:22s;--delay:-11s"></i>
-    <i class="spore" style="--x:40%;--s:4px;--d:16s;--delay:-2s"></i>
-    <i class="spore" style="--x:63%;--s:2px;--d:24s;--delay:-9s"></i>
-    <i class="spore" style="--x:78%;--s:3px;--d:19s;--delay:-6s"></i>
-    <i class="spore" style="--x:90%;--s:2px;--d:21s;--delay:-14s"></i>
-  </div>
-
-  <div class="wrap">
-    <header class="top">
-      <button class="mark" type="button" data-act="home">Zoe</button>
-      <p class="top-note">No account · no trackers</p>
-    </header>
+  <div class="page">
+    <p class="label">How repairable is your phone?</p>
+    <p class="label" id="step">1 of 3</p>
+    <h1 id="title">Can you open it and take the battery out?</h1>
+    <p class="intro" id="intro">Three questions about the phone in your hand.</p>
     <main id="stage"></main>
+    <footer>
+      <p>For an official breakdown of a specific phone, see <a href="https://www.ifixit.com/repairability/smartphone-repairability-scores">iFixit’s smartphone repairability scores</a>. This quiz does not score individual phones.</p>
+    </footer>
   </div>
-  <footer>
-    <p>Zoe is an independent reading, scored from how a phone opens, whether the battery and screen can leave, and whether parts, a manual, and the software will allow the repair. It is not an iFixit score. Official teardowns live on <a href="https://www.ifixit.com/repairability/smartphone-repairability-scores">iFixit’s smartphone repairability scores</a>.</p>
-  </footer>
   <div id="toast" role="status"></div>
-  <noscript><p style="padding:1rem">Zoe needs JavaScript to turn the pages.</p></noscript>
-
-  <script id="zoe">
-    const WEIGHTS = { battery: 2, screen: 1.6, open: 1.3, parts: 1.6, guides: 1, port: 0.8, pairing: 1, screws: 0.7 };
-    const MECH = ["battery", "screen", "open", "port", "screws"];
-    const SUPPORT = ["parts", "guides", "pairing"];
-    const FOLD_MECH = 0.62;
-    const LOCK_BELOW = 0.3;
-    const LOCK_RATE = 0.65;
-    const FACTORS = [
-      ["battery", "Battery"],
-      ["screen", "Screen"],
-      ["open", "Opening"],
-      ["parts", "Spare parts"],
-      ["guides", "Guides"],
-      ["port", "Charge port"],
-      ["pairing", "Software"],
-      ["screws", "Fasteners"]
-    ];
-
-    const BIOMES = [
-      { min: 0, name: "Sealed amber", latin: "Resina", color: "#e7a15a", poem: "Beautiful, and closed. The phone can be used. It does not want to be opened." },
-      { min: 2.2, name: "Bramble", latin: "Vepres", color: "#e09a86", poem: "You can get in. It catches on glue, odd screws, or a screen that was not given an exit." },
-      { min: 4, name: "Lichen", latin: "Lichenes", color: "#d5de9a", poem: "Slow life. A repair is possible if you are patient, and if a part can be found." },
-      { min: 5.5, name: "Fern", latin: "Filix", color: "#9ed56e", poem: "The common breaks were thought about. Screen and battery have a path. Bring the right tools." },
-      { min: 7, name: "Greenhouse", latin: "Hortus", color: "#7ee0b0", poem: "Tended on purpose. Parts exist, the way in exists, and a careful person can do the work." },
-      { min: 8.5, name: "Meadow", latin: "Pratum", color: "#e7f6a4", poem: "Open ground. Ordinary tools, a battery that lifts out, and a maker who sells the pieces." }
-    ];
-
-    const LOW_NOTE = {
-      battery: "The battery is the difficult root. If the cell stays glued in, the phone lives one battery at a time.",
-      screen: "A cracked screen is a long unsealing, not a morning’s work.",
-      open: "Getting inside is the thicket. Every other repair waits on that first opening.",
-      parts: "Without a part you can buy, the repair stays theoretical.",
-      guides: "There is barely a map. Skill has to stand in for instructions.",
-      port: "The charge port is married to the board. A small failure becomes a large one.",
-      pairing: "The phone may not welcome a part it did not see leave the factory.",
-      screws: "The fasteners are fussy: odd heads, or glue standing where a screw should be."
-    };
-    const HIGH_NOTE = {
-      battery: "The battery is allowed to leave. That is the heart of a repairable phone.",
-      screen: "The screen was given a real exit.",
-      open: "It opens like an object that expects to be opened.",
-      parts: "Spare parts exist, so a break is not a funeral.",
-      guides: "Someone wrote the path down.",
-      port: "The charge port can be replaced without sacrificing the motherboard.",
-      pairing: "A new part is welcome. The software does not hold the repair hostage.",
-      screws: "Ordinary fasteners. The tools you already have are enough."
-    };
-    const RAISE = {
-      battery: "A hatch or a real pull tab would lift this reading more than anything else.",
-      screen: "A screen that comes off first, with clips or screws, would change the whole device.",
-      open: "Fewer glues, or one everyday screwdriver, would open the rest of the repairs.",
-      parts: "Genuine parts, sold to anyone, would make the score mean something in the hand.",
-      guides: "A free manual from the maker would turn guesswork into a path.",
-      port: "A modular charge port would stop a cheap fault from costing the whole board.",
-      pairing: "Software that accepts a spare part would give the screws their meaning back.",
-      screws: "One screw head, used honestly, would make the phone less of a puzzle."
-    };
-
+  <script>
     const QUESTIONS = [
       {
-        kicker: "Opening",
-        title: "How do you get inside?",
-        hint: "The first minute of a repair decides the rest.",
+        title: "Can you open it and take the battery out?",
         options: [
-          { id: "screws", label: "Screws or clips, and almost no glue.", set: { open: 0.95, screws: 0.9, fold: false } },
-          { id: "mixed", label: "Clips, a little heat, and some adhesive.", set: { open: 0.68, screws: 0.55, fold: false } },
-          { id: "many", label: "Several different screw heads, plus glue.", set: { open: 0.58, screws: 0.32, fold: false } },
-          { id: "glue", label: "Glue is the fastener. You pry and hope.", set: { open: 0.32, screws: 0.2, fold: false } },
-          { id: "fold", label: "It’s a foldable. Glass has to be unsealed before anything else.", set: { open: 0.42, screws: 0.34, fold: true } },
-          { id: "unsure-open", label: "I haven’t opened it, and I don’t know how it comes apart.", set: { open: 0.45, screws: 0.45, fold: false }, unsure: true }
+          { id: "yes", label: "Yes", note: "It opens, and the battery comes out." },
+          { id: "some", label: "I can open it, but the battery is stuck", note: "The battery is stuck in place." },
+          { id: "no", label: "No", note: "Getting the battery out is not realistic." },
+          { id: "unsure", label: "Not sure", note: "It’s unclear whether the battery comes out.", unsure: true }
         ]
       },
       {
-        kicker: "Battery",
-        title: "What does the battery ask of you?",
-        hint: "A phone lives as long as its cell can be replaced.",
+        title: "Can you replace the screen, and buy the part?",
         options: [
-          { id: "seconds", label: "It lifts out in seconds.", set: { battery: 1 } },
-          { id: "tabs", label: "Pull tabs, screws, or a release made for this.", set: { battery: 0.8 } },
-          { id: "reach", label: "Glued, but I can reach it without destroying the screen.", set: { battery: 0.5 } },
-          { id: "buried", label: "Strong glue, and a lot of the phone comes out first.", set: { battery: 0.26 } },
-          { id: "nope", label: "Treat it as not replaceable.", set: { battery: 0.08 } },
-          { id: "unsure-bat", label: "I don’t know.", set: { battery: 0.4 }, unsure: true }
+          { id: "yes", label: "Yes", note: "The screen can be replaced, and the part is sold." },
+          { id: "some", label: "The part exists, but the job is hard", note: "A screen part exists, but fitting it is hard." },
+          { id: "no", label: "No", note: "A new screen is not a practical repair." },
+          { id: "unsure", label: "Not sure", note: "It’s unclear whether the screen can be replaced.", unsure: true }
         ]
       },
       {
-        kicker: "Screen",
-        title: "If the glass breaks, what kind of day is it?",
-        hint: "The most common repair should not be a punishment.",
+        title: "After a new part is in, does the phone work as before?",
         options: [
-          { id: "first", label: "The screen is meant to come off, with screws or clips.", set: { screen: 0.92 } },
-          { id: "glued-first", label: "It’s a priority, but it’s glued on.", set: { screen: 0.72 } },
-          { id: "tedious", label: "Glued, and the job is tedious or wasteful.", set: { screen: 0.34 } },
-          { id: "hard", label: "One of the hardest repairs. Easy to damage more along the way.", set: { screen: 0.15 } },
-          { id: "unsure-screen", label: "I don’t know.", set: { screen: 0.42 }, unsure: true }
-        ]
-      },
-      {
-        kicker: "Parts",
-        title: "Can you buy the piece that broke?",
-        hint: "A repair without a spare is just an autopsy.",
-        options: [
-          { id: "oem", label: "The maker sells genuine parts to anyone.", set: { parts: 0.95 } },
-          { id: "some", label: "Some official parts, or a deep third-party shelf.", set: { parts: 0.62 } },
-          { id: "donor", label: "Mostly donor phones and grey-market sellers.", set: { parts: 0.28 } },
-          { id: "none", label: "I can’t find parts.", set: { parts: 0.08 } },
-          { id: "unsure-parts", label: "I don’t know where to look.", set: { parts: 0.35 }, unsure: true }
-        ]
-      },
-      {
-        kicker: "Map",
-        title: "Is there a map for the repair?",
-        hint: "A manual is a trail. A forum post is a rumor.",
-        options: [
-          { id: "manual", label: "A free manual from the maker.", set: { guides: 0.95 } },
-          { id: "indie", label: "Clear independent guides. Nothing official.", set: { guides: 0.55 } },
-          { id: "forum", label: "Scattered posts and guesswork.", set: { guides: 0.22 } },
-          { id: "nomap", label: "No useful guide.", set: { guides: 0.06 } },
-          { id: "unsure-guide", label: "I don’t know.", set: { guides: 0.35 }, unsure: true }
-        ]
-      },
-      {
-        kicker: "Port",
-        title: "When the charge port dies, what is it attached to?",
-        hint: "A socket should not take the motherboard with it.",
-        options: [
-          { id: "module", label: "It’s its own module. It unplugs.", set: { port: 0.9 } },
-          { id: "cable", label: "It’s on a cable. Fiddly, not soldered.", set: { port: 0.55 } },
-          { id: "solder", label: "Soldered to the main board.", set: { port: 0.12 } },
-          { id: "unsure-port", label: "I’m not sure.", set: { port: 0.4 }, unsure: true }
-        ]
-      },
-      {
-        kicker: "Welcome",
-        title: "After the new part is in, what does the phone do?",
-        hint: "Some phones punish a repair in software.",
-        options: [
-          { id: "works", label: "It just works.", set: { pairing: 1 } },
-          { id: "warning", label: "A warning appears, then life goes on.", set: { pairing: 0.58 } },
-          { id: "lock", label: "Features break unless the maker blesses the part.", set: { pairing: 0.12 } },
-          { id: "unsure-pair", label: "I’m not sure.", set: { pairing: 0.48 }, unsure: true }
+          { id: "yes", label: "Yes", note: "A new part works." },
+          { id: "some", label: "It warns me, then works", note: "A new part works, after a warning." },
+          { id: "no", label: "No. Some features stop", note: "The phone may reject a new part." },
+          { id: "unsure", label: "Not sure", note: "It’s unclear whether a new part will be accepted.", unsure: true }
         ]
       }
     ];
 
-    const PHONES = [
-      phone("fairphone-6", "Fairphone", "Fairphone 6", 2025, "The battery leaves without a fight, and the maker sells the pieces to put back.", { open: 0.98, screws: 0.95, battery: 1, screen: 0.96, parts: 1, guides: 1, port: 0.84, pairing: 0.95, fold: false }),
-      phone("fairphone-5", "Fairphone", "Fairphone 5", 2023, "Ordinary tools, no glue blocking the path, and a battery that takes seconds.", { open: 1, screws: 0.98, battery: 1, screen: 0.93, parts: 1, guides: 0.95, port: 0.8, pairing: 0.95, fold: false }),
-      phone("hmd-fusion", "HMD", "HMD Fusion", 2024, "The display is held with screws. Back, battery, and port are straightforward, and parts exist for the common breaks.", { open: 0.9, screws: 0.86, battery: 0.84, screen: 0.9, parts: 0.78, guides: 0.76, port: 0.8, pairing: 0.86, fold: false }),
-      phone("hmd-skyline", "HMD", "HMD Skyline", 2024, "A clever opening, with the screen and battery given priority. A little adhesive still has to be cleaned away.", { open: 0.86, screws: 0.7, battery: 0.74, screen: 0.8, parts: 0.76, guides: 0.74, port: 0.7, pairing: 0.84, fold: false }),
-      phone("nokia-g22", "Nokia", "Nokia G22", 2023, "It pries open cleanly and the battery is easy to reach. The screen was not put first.", { open: 0.88, screws: 0.8, battery: 0.9, screen: 0.58, parts: 0.82, guides: 0.8, port: 0.72, pairing: 0.9, fold: false }),
-      phone("nothing-phone-3", "Nothing", "Nothing Phone 3", 2025, "A pull jacket might free the battery, and the port is a module. Opening is fussy, the screen is very hard, and the maker does not sell the repair.", { open: 0.3, screws: 0.4, battery: 0.58, screen: 0.16, parts: 0.1, guides: 0.12, port: 0.84, pairing: 0.6, fold: false }),
-      phone("iphone-air", "Apple", "iPhone Air", 2025, "Screen repairs come first, and the rest is reached through the back. Glue and four screw heads stay in the room.", { open: 0.7, screws: 0.38, battery: 0.82, screen: 0.84, parts: 0.9, guides: 0.86, port: 0.5, pairing: 0.6, fold: false }),
-      phone("iphone-17-pro", "Apple", "iPhone 17 Pro", 2025, "Display and battery were considered, and the battery is screwed down. Five screw heads still slow a simple job.", { open: 0.6, screws: 0.28, battery: 0.74, screen: 0.7, parts: 0.92, guides: 0.86, port: 0.48, pairing: 0.62, fold: false }),
-      phone("iphone-16e", "Apple", "iPhone 16e", 2025, "Entry through the back glass, a battery release, and parts from Apple. Several screw types and glue remain.", { open: 0.7, screws: 0.38, battery: 0.82, screen: 0.84, parts: 0.9, guides: 0.86, port: 0.5, pairing: 0.6, fold: false }),
-      phone("iphone-16", "Apple", "iPhone 16", 2024, "You enter through the back, and the battery adhesive can be released electrically. Glue and four screw heads still complicate the work.", { open: 0.7, screws: 0.38, battery: 0.82, screen: 0.84, parts: 0.9, guides: 0.86, port: 0.5, pairing: 0.6, fold: false }),
-      phone("iphone-16-plus", "Apple", "iPhone 16 Plus", 2024, "Same plan as the smaller 16: back-glass entry, a battery release, glue, and more than one screw head.", { open: 0.7, screws: 0.38, battery: 0.82, screen: 0.84, parts: 0.9, guides: 0.86, port: 0.5, pairing: 0.6, fold: false }),
-      phone("iphone-16-pro", "Apple", "iPhone 16 Pro", 2024, "A generous entry through the back, with screws and clips that help the phone go back together.", { open: 0.74, screws: 0.5, battery: 0.8, screen: 0.84, parts: 0.9, guides: 0.86, port: 0.5, pairing: 0.6, fold: false }),
-      phone("iphone-16-pro-max", "Apple", "iPhone 16 Pro Max", 2024, "Same repair path as the 16 Pro: back entry, clips for reassembly, adhesives still in the design.", { open: 0.74, screws: 0.5, battery: 0.8, screen: 0.84, parts: 0.9, guides: 0.86, port: 0.5, pairing: 0.6, fold: false }),
-      phone("iphone-15", "Apple", "iPhone 15", 2023, "Screen first, everything else through the back, clips to help reassembly. Software can sour a part the maker did not bless.", { open: 0.66, screws: 0.36, battery: 0.68, screen: 0.78, parts: 0.85, guides: 0.78, port: 0.46, pairing: 0.2, fold: false }),
-      phone("iphone-15-plus", "Apple", "iPhone 15 Plus", 2023, "Same body plan as the 15. The hardware has a path. Parts pairing is the thorn.", { open: 0.66, screws: 0.36, battery: 0.68, screen: 0.78, parts: 0.85, guides: 0.78, port: 0.46, pairing: 0.2, fold: false }),
-      phone("iphone-15-pro", "Apple", "iPhone 15 Pro", 2023, "The back glass, once a dead end, can come off. Pairing and a handful of screw types still tax a home repair.", { open: 0.64, screws: 0.34, battery: 0.66, screen: 0.74, parts: 0.85, guides: 0.78, port: 0.46, pairing: 0.2, fold: false }),
-      phone("iphone-15-pro-max", "Apple", "iPhone 15 Pro Max", 2023, "Display and battery stay a priority, and the back glass is replaceable. Software locks keep the score modest.", { open: 0.64, screws: 0.34, battery: 0.66, screen: 0.74, parts: 0.85, guides: 0.78, port: 0.46, pairing: 0.2, fold: false }),
-      phone("iphone-14", "Apple", "iPhone 14", 2022, "The important parts were given a path, including the back glass. Parts pairing can make a replacement unwelcome.", { open: 0.6, screws: 0.3, battery: 0.58, screen: 0.72, parts: 0.7, guides: 0.62, port: 0.4, pairing: 0.14, fold: false }),
-      phone("iphone-14-plus", "Apple", "iPhone 14 Plus", 2022, "A repairable skeleton, then proprietary screws and pairing that foil a lot of home repairs.", { open: 0.58, screws: 0.28, battery: 0.58, screen: 0.72, parts: 0.7, guides: 0.62, port: 0.4, pairing: 0.14, fold: false }),
-      phone("iphone-14-pro", "Apple", "iPhone 14 Pro", 2022, "Most modules are reachable, but the rear glass still has no good exit, and pairing makes many swaps painful.", { open: 0.5, screws: 0.28, battery: 0.56, screen: 0.7, parts: 0.68, guides: 0.6, port: 0.4, pairing: 0.14, fold: false }),
-      phone("iphone-14-pro-max", "Apple", "iPhone 14 Pro Max", 2022, "Same Pro problem as the smaller one: reachable parts, a stubborn rear glass, and pairing in the way.", { open: 0.5, screws: 0.28, battery: 0.56, screen: 0.7, parts: 0.68, guides: 0.6, port: 0.4, pairing: 0.14, fold: false }),
-      phone("pixel-10", "Google", "Pixel 10", 2025, "The back glass lifts without heat, and the battery and port are kinder than earlier Pixels. A lot of the phone is still held by glue alone.", { open: 0.66, screws: 0.3, battery: 0.66, screen: 0.78, parts: 0.88, guides: 0.92, port: 0.74, pairing: 0.75, fold: false }),
-      phone("pixel-9", "Google", "Pixel 9", 2024, "The screen is the priority and the back opens without heat. The battery is stubborn, and the port hides behind the display.", { open: 0.6, screws: 0.25, battery: 0.4, screen: 0.74, parts: 0.86, guides: 0.95, port: 0.28, pairing: 0.72, fold: false }),
-      phone("pixel-9-pro", "Google", "Pixel 9 Pro", 2024, "Same repair map as the Pixel 9: a kind back glass, a glued battery, a port that waits behind the screen.", { open: 0.6, screws: 0.25, battery: 0.4, screen: 0.74, parts: 0.86, guides: 0.95, port: 0.28, pairing: 0.72, fold: false }),
-      phone("pixel-9-pro-xl", "Google", "Pixel 9 Pro XL", 2024, "The large Pixel 9 Pro. Manuals and parts are real. Glue still holds the screen, the back, and the battery.", { open: 0.6, screws: 0.25, battery: 0.4, screen: 0.74, parts: 0.86, guides: 0.95, port: 0.28, pairing: 0.72, fold: false }),
-      phone("pixel-9-pro-fold", "Google", "Pixel 9 Pro Fold", 2024, "Adhesives can let go without heat, and Google publishes a manual and parts. It is still a foldable: every repair unseals a delicate face.", { open: 0.46, screws: 0.32, battery: 0.4, screen: 0.34, parts: 0.86, guides: 0.95, port: 0.42, pairing: 0.7, fold: true }),
-      phone("pixel-8", "Google", "Pixel 8", 2023, "A public manual, real parts, and clips that hold the screen even if you skip new adhesive. The battery is glued and the port is soldered.", { open: 0.58, screws: 0.48, battery: 0.38, screen: 0.76, parts: 0.78, guides: 0.9, port: 0.16, pairing: 0.72, fold: false }),
-      phone("pixel-8-pro", "Google", "Pixel 8 Pro", 2023, "Same kindness as the Pixel 8: a manual, parts, and clips on the display. The battery and the soldered port stay difficult.", { open: 0.58, screws: 0.48, battery: 0.36, screen: 0.76, parts: 0.78, guides: 0.9, port: 0.16, pairing: 0.72, fold: false }),
-      phone("pixel-fold", "Google", "Pixel Fold", 2023, "A manual and genuine parts exist. Opening still means ungluing the outer display or the back, on a device that is already complicated.", { open: 0.4, screws: 0.3, battery: 0.36, screen: 0.3, parts: 0.8, guides: 0.9, port: 0.35, pairing: 0.68, fold: true }),
-      phone("pixel-7a", "Google", "Pixel 7a", 2023, "There is a manual and a short parts list. The screen and back are reachable only through glue, and the port is soldered.", { open: 0.48, screws: 0.3, battery: 0.36, screen: 0.62, parts: 0.5, guides: 0.7, port: 0.15, pairing: 0.7, fold: false }),
-      phone("pixel-7", "Google", "Pixel 7", 2022, "Clips make the display honest to reassemble. Parts are limited, there is no official manual, and the port is soldered.", { open: 0.5, screws: 0.45, battery: 0.4, screen: 0.7, parts: 0.45, guides: 0.22, port: 0.15, pairing: 0.7, fold: false }),
-      phone("pixel-7-pro", "Google", "Pixel 7 Pro", 2022, "Display clips help. The glued battery is tough to reach, and the soldered port is a poor candidate for repair.", { open: 0.48, screws: 0.42, battery: 0.32, screen: 0.68, parts: 0.45, guides: 0.22, port: 0.15, pairing: 0.7, fold: false }),
-      phone("pixel-6a", "Google", "Pixel 6a", 2022, "Screen and battery were prioritized, then buried in adhesive. The port and the back glass are poor candidates for repair.", { open: 0.42, screws: 0.3, battery: 0.4, screen: 0.6, parts: 0.42, guides: 0.2, port: 0.14, pairing: 0.68, fold: false }),
-      phone("galaxy-z-fold-7", "Samsung", "Galaxy Z Fold 7", 2025, "The back adhesive can release without heat and the port is modular. Official parts and a guide are scarce, and the fold is its own thicket.", { open: 0.5, screws: 0.35, battery: 0.42, screen: 0.3, parts: 0.12, guides: 0.1, port: 0.78, pairing: 0.5, fold: true }),
-      phone("galaxy-s25-edge", "Samsung", "Galaxy S25 Edge", 2025, "The battery and charge port are more willing than older Galaxies. The screen is glued hard to the frame.", { open: 0.4, screws: 0.4, battery: 0.56, screen: 0.3, parts: 0.55, guides: 0.5, port: 0.8, pairing: 0.5, fold: false }),
-      phone("galaxy-s25-ultra", "Samsung", "Galaxy S25 Ultra", 2025, "An easier battery than the old Ultra, and a modular port. The screen is still a glued, tedious job.", { open: 0.42, screws: 0.42, battery: 0.58, screen: 0.32, parts: 0.58, guides: 0.5, port: 0.82, pairing: 0.5, fold: false }),
-      phone("galaxy-s23-ultra", "Samsung", "Galaxy S23 Ultra", 2023, "Phillips screws, at least. The battery pull tab barely helps, and the screen asks you to dismantle the phone while fighting glue.", { open: 0.4, screws: 0.85, battery: 0.34, screen: 0.32, parts: 0.45, guides: 0.4, port: 0.4, pairing: 0.5, fold: false }),
-      phone("galaxy-s22", "Samsung", "Galaxy S22", 2022, "Familiar screws, then a strongly glued battery and a screen repair that is mostly disassembly.", { open: 0.32, screws: 0.88, battery: 0.24, screen: 0.28, parts: 0.35, guides: 0.3, port: 0.32, pairing: 0.55, fold: false }),
-      phone("galaxy-s22-ultra", "Samsung", "Galaxy S22 Ultra", 2022, "The same thicket as the S22: standard screws, a glued battery, and a screen that does not want to leave.", { open: 0.32, screws: 0.88, battery: 0.24, screen: 0.28, parts: 0.35, guides: 0.3, port: 0.32, pairing: 0.55, fold: false })
-    ];
-
-    function phone(id, brand, name, year, blurb, traits) {
-      return { id, brand, name, year, blurb, traits };
-    }
-
-    function scoreParts(t) {
-      let mech = 0;
-      let support = 0;
-      MECH.forEach((k) => { mech += (Number(t[k]) || 0) * WEIGHTS[k]; });
-      SUPPORT.forEach((k) => { support += (Number(t[k]) || 0) * WEIGHTS[k]; });
-      const mechUsed = t.fold ? mech * FOLD_MECH : mech;
-      let lock = 0;
-      if ((Number(t.pairing) || 0) < LOCK_BELOW) {
-        lock = ((Number(t.parts) || 0) * WEIGHTS.parts + (Number(t.guides) || 0) * WEIGHTS.guides) * LOCK_RATE;
-      }
-      const raw = Math.max(0, Math.min(10, mechUsed + support - lock));
-      return {
-        mech, mechUsed, support, lock,
-        foldCut: mech - mechUsed,
-        score: Math.round(raw * 10) / 10
-      };
-    }
-
-    function scoreOf(t) { return scoreParts(t).score; }
-
-    function biomeFor(score) {
-      let biome = BIOMES[0];
-      BIOMES.forEach((b) => { if (score >= b.min) biome = b; });
-      return biome;
-    }
-
-    function traitsFromPicks(picks) {
-      const t = { open: 0, battery: 0, screen: 0, parts: 0, guides: 0, port: 0, pairing: 0, screws: 0, fold: false, unsure: 0, answered: 0 };
-      QUESTIONS.forEach((q, i) => {
-        const opt = q.options.find((o) => o.id === picks[i]);
-        if (!opt) return;
-        t.answered += 1;
-        if (opt.unsure) t.unsure += 1;
-        Object.assign(t, opt.set);
-      });
-      return t;
-    }
-
-    function fieldNotes(t, device) {
-      const notes = [];
-      if (device && device.blurb) notes.push(device.blurb);
-      if ((t.unsure || 0) >= 3) notes.push("A hazy reading. Several answers were unknown, so this score is a cautious middle, not a teardown.");
-      if (t.fold) notes.push("Foldables lose mechanical points here. Two displays and a hinge make every physical step more delicate.");
-      if ((Number(t.pairing) || 0) < LOCK_BELOW) notes.push("Software that refuses a spare part pulls the score down.");
-      const ranked = FACTORS.map(([k, label]) => ({ k, label, v: Number(t[k]) || 0 })).sort((a, b) => a.v - b.v);
-      const low = ranked[0];
-      const high = ranked[ranked.length - 1];
-      if (low.v < 0.45 && !(low.k === "pairing" && (Number(t.pairing) || 0) < LOCK_BELOW)) notes.push(LOW_NOTE[low.k]);
-      if (high.v > 0.8) notes.push(HIGH_NOTE[high.k]);
-      return notes.slice(0, 4);
-    }
+    const state = { step: 0, picks: [], timer: null, replaceNext: true };
 
     function esc(s) {
       return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     }
 
-    const state = {
-      view: "home",
-      step: 0,
-      picks: [],
-      phoneId: null,
-      brand: "All",
-      q: "",
-      timer: null,
-      replaceNext: true
-    };
+    function chosen() {
+      return state.picks.map((id, i) => QUESTIONS[i].options.find((o) => o.id === id)).filter(Boolean);
+    }
 
-    function findPhone(id) { return PHONES.find((p) => p.id === id) || null; }
-
-    function filteredPhones() {
-      const words = state.q.trim().toLowerCase().split(/\s+/).filter(Boolean);
-      return PHONES.filter((p) => {
-        if (state.brand !== "All" && p.brand !== state.brand) return false;
-        const hay = (p.brand + " " + p.name + " " + p.year).toLowerCase();
-        return words.every((w) => hay.includes(w));
-      });
+    function outcome(options) {
+      const unsure = options.filter((o) => o.unsure).length;
+      const nos = options.filter((o) => o.id === "no").length;
+      const yes = options.filter((o) => o.id === "yes").length;
+      if (unsure >= 2) {
+        return {
+          title: "Hard to say",
+          line: "Too many answers were not sure. Check whether the battery comes out, and whether you can buy a part."
+        };
+      }
+      if (nos >= 2) {
+        return {
+          title: "Hard to repair",
+          line: "A home repair is difficult."
+        };
+      }
+      if (yes === QUESTIONS.length) {
+        return {
+          title: "Easy to repair",
+          line: "You can open it, get a part, and the phone should work after the repair."
+        };
+      }
+      return {
+        title: "Repairable, but it takes work",
+        line: "A repair is possible. At least one step is awkward."
+      };
     }
 
     function currentUrl() {
-      const u = new URL(location.href);
-      u.search = "";
-      u.hash = "";
-      if (state.view === "result" && state.phoneId) u.searchParams.set("phone", state.phoneId);
-      else if (state.view === "result") u.searchParams.set("read", state.picks.join("."));
-      else if (state.view === "pick") u.searchParams.set("view", "pick");
-      else if (state.view === "quiz") {
-        u.searchParams.set("view", "quiz");
-        u.searchParams.set("step", String(state.step));
-        if (state.picks.some(Boolean)) u.searchParams.set("read", state.picks.map((p) => p || "").join("."));
+      const url = new URL(location.href);
+      url.search = "";
+      url.hash = "";
+      if (state.step >= QUESTIONS.length && state.picks.length === QUESTIONS.length) {
+        url.searchParams.set("a", state.picks.join("."));
+      } else if (state.step > 0 || state.picks.some(Boolean)) {
+        url.searchParams.set("q", String(state.step));
+        if (state.picks.some(Boolean)) url.searchParams.set("a", state.picks.map((id) => id || "").join("."));
       }
-      return u;
+      return url;
     }
 
     function snapshot() {
-      return { view: state.view, step: state.step, picks: state.picks.slice(), phoneId: state.phoneId, brand: state.brand, q: state.q };
+      return { step: state.step, picks: state.picks.slice() };
     }
 
     function clearTimer() {
@@ -740,10 +234,9 @@
       state.timer = null;
     }
 
-    function go(view, extra) {
+    function show(step) {
       clearTimer();
-      state.view = view;
-      if (extra) Object.assign(state, extra);
+      state.step = step;
       const url = currentUrl();
       const data = snapshot();
       if (state.replaceNext) {
@@ -755,340 +248,122 @@
       render();
     }
 
-    function showToast(text) {
-      const toast = document.getElementById("toast");
-      toast.textContent = text;
-      toast.classList.add("show");
-      clearTimeout(showToast._t);
-      showToast._t = setTimeout(() => toast.classList.remove("show"), 1600);
+    function toast(text) {
+      const node = document.getElementById("toast");
+      node.textContent = text;
+      node.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => node.classList.remove("show"), 1400);
     }
 
-    async function copyText(text, ok) {
+    async function copyLink() {
+      const link = currentUrl().href;
       try {
-        await navigator.clipboard.writeText(text);
-        showToast(ok);
+        await navigator.clipboard.writeText(link);
       } catch (err) {
         const area = document.createElement("textarea");
-        area.value = text;
+        area.value = link;
         document.body.appendChild(area);
         area.select();
         document.execCommand("copy");
         area.remove();
-        showToast(ok);
       }
+      toast("Link copied");
     }
 
-    function listHtml() {
-      const phones = filteredPhones();
-      if (!phones.length) {
-        return '<div class="empty"><p>Not in this pressing.</p><button class="btn" type="button" data-act="quiz">Answer from the phone in your hand</button></div>';
-      }
-      let brand = "";
-      let html = "";
-      phones.forEach((p) => {
-        if (p.brand !== brand) {
-          brand = p.brand;
-          html += '<div class="group-label">' + esc(brand) + "</div>";
-        }
-        html += '<button class="phone-row" type="button" data-act="phone" data-id="' + esc(p.id) + '"><span class="name">' + esc(p.name) + '</span><span class="year">' + p.year + "</span></button>";
-      });
-      return html;
-    }
-
-    function scaleHtml() {
-      return '<div class="scale">' + BIOMES.map((b) => (
-        '<div><i style="--c:' + b.color + '"></i><span>' + esc(b.name) + "</span></div>"
-      )).join("") + "</div>";
-    }
-
-    function renderHome() {
-      return (
-        '<div class="home-grid">' +
-          '<div>' +
-            '<p class="kicker">Field guide · bio-tech</p>' +
-            '<h1>How repairable<br>is your <em>phone?</em></h1>' +
-            '<p class="lede">You have the right to open what you own. This reading asks how willing the phone is. Zero is sealed amber. Ten is a meadow: screws, a battery that lifts out, parts you can buy.</p>' +
-            '<div class="actions">' +
-              '<button class="btn" type="button" data-act="pick">Look up your phone</button>' +
-              '<button class="btn ghost" type="button" data-act="quiz">Answer seven questions</button>' +
-            "</div>" +
-            scaleHtml() +
-          "</div>" +
-          '<figure class="relic">' +
-            '<svg viewBox="0 0 200 360" role="img" aria-label="A phone drawn as a leaf circuit">'+
-              '<rect x="36" y="18" width="128" height="300" rx="28" fill="rgba(8,20,16,0.35)" stroke="#f3d7a6" stroke-width="1.4"/>' +
-              '<rect x="78" y="30" width="44" height="7" rx="3.5" fill="none" stroke="#f3d7a6" stroke-width="1"/>' +
-              '<circle cx="146" cy="48" r="5" fill="none" stroke="#f0b7c3"/>' +
-              '<circle cx="100" cy="92" r="11" fill="none" stroke="#f3d7a6"/>' +
-              '<path d="M100 92 C100 150 62 160 48 214" fill="none" stroke="#d7f29a" stroke-width="1.3"/>' +
-              '<path d="M100 92 C100 140 146 168 154 224" fill="none" stroke="#9ff5d4" stroke-width="1.2"/>' +
-              '<path d="M100 92 C86 120 70 130 58 128" fill="none" stroke="#d7f29a" stroke-width="1"/>' +
-              '<path d="M48 214 C40 240 58 268 86 286" fill="none" stroke="#d7f29a" stroke-width="1.1"/>' +
-              '<circle cx="48" cy="214" r="3.5" fill="#d7f29a"/>' +
-              '<circle cx="154" cy="224" r="3" fill="#9ff5d4"/>' +
-              '<circle cx="100" cy="92" r="2.4" fill="#f3d7a6"/>' +
-            "</svg>" +
-            "<figcaption class=\"fig\">Fig. 01 — living circuit</figcaption>" +
-          "</figure>" +
-        "</div>"
-      );
-    }
-
-    function renderPick() {
-      const brands = ["All"].concat([...new Set(PHONES.map((p) => p.brand))]);
-      const chips = brands.map((b) => (
-        '<button class="chip' + (b === state.brand ? " on" : "") + '" type="button" data-act="brand" data-brand="' + esc(b) + '" aria-pressed="' + (b === state.brand) + '">' + esc(b) + "</button>"
-      )).join("");
-      return (
-        '<section class="sheet">' +
-          '<p class="kicker">Specimen index · ' + PHONES.length + " phones</p>" +
-          '<h2>Find the phone.</h2>' +
-          '<p class="hint">Newest in this guide run from 2022 to 2025. Anything else takes the seven questions.</p>' +
-          '<label class="seek"><span>Search</span><input id="q" type="search" placeholder="Fairphone, Pixel, iPhone…" value="' + esc(state.q) + '" autocomplete="off"></label>' +
-          '<div class="chips">' + chips + "</div>" +
-          '<div class="list" id="list">' + listHtml() + "</div>" +
-          '<div class="row-nav"><button class="texty" type="button" data-act="home">Back</button><button class="texty" type="button" data-act="quiz">Mine isn’t listed</button></div>' +
-        "</section>"
-      );
-    }
-
-    function renderQuiz() {
+    function renderQuestion() {
       const q = QUESTIONS[state.step];
-      const vine = QUESTIONS.map((_, i) => '<b class="' + (i <= state.step ? "on" : "") + '"></b>').join("");
       const options = q.options.map((o, i) => (
-        '<button class="option" type="button" data-act="choose" data-id="' + esc(o.id) + '" aria-pressed="' + (state.picks[state.step] === o.id) + '"><small>' + String(i + 1).padStart(2, "0") + "</small>" + esc(o.label) + "</button>"
+        '<button class="option" type="button" data-act="choose" data-id="' + esc(o.id) + '" aria-pressed="' + (state.picks[state.step] === o.id) + '">' + (i + 1) + ".  " + esc(o.label) + "</button>"
       )).join("");
       return (
-        '<section class="sheet">' +
-          '<div class="q-top"><p class="kicker">' + esc(q.kicker) + '</p><p class="step-no">' + String(state.step + 1).padStart(2, "0") + " / 07</p></div>" +
-          '<div class="vine" aria-hidden="true">' + vine + "</div>" +
-          "<h2>" + esc(q.title) + "</h2>" +
-          '<p class="hint">' + esc(q.hint) + "</p>" +
-          '<div class="options">' + options + "</div>" +
-          '<div class="row-nav"><button class="texty" type="button" data-act="back"' + (state.step === 0 ? " disabled" : "") + '>Back</button><span class="step-no">Keys 1–' + q.options.length + "</span></div>" +
-        "</section>"
+        '<div class="options">' + options + "</div>" +
+        '<div class="nav"><button class="texty" type="button" data-act="back"' + (state.step === 0 ? " disabled" : "") + ">Back</button></div>"
       );
     }
 
     function renderResult() {
-      const device = state.phoneId ? findPhone(state.phoneId) : null;
-      const traits = device ? Object.assign({ unsure: 0 }, device.traits) : traitsFromPicks(state.picks);
-      const parts = scoreParts(traits);
-      const biome = biomeFor(parts.score);
-      const notes = fieldNotes(traits, device);
-      const title = device ? device.name : "Your phone";
-      const year = device ? String(device.year) : "Answered by hand";
-      const low = FACTORS.map(([k]) => k).sort((a, b) => (Number(traits[a]) || 0) - (Number(traits[b]) || 0))[0];
-      const bars = FACTORS.map(([k, label]) => (
-        '<div class="bar-row"><span>' + label + '</span><div class="track"><span style="--v:' + (Number(traits[k]) || 0) + '"></span></div><span class="pts">' + ((Number(traits[k]) || 0) * WEIGHTS[k]).toFixed(1) + "</span></div>"
-      )).join("");
-      const extras = [];
-      if (traits.fold) extras.push('<div class="bar-row"><span>Foldable</span><div class="track"></div><span class="pts cut">−' + parts.foldCut.toFixed(1) + "</span></div>");
-      if (parts.lock) extras.push('<div class="bar-row"><span>Software lock</span><div class="track"></div><span class="pts cut">−' + parts.lock.toFixed(1) + "</span></div>");
-      const lift = parts.score < 8.5 ? '<p class="hint">What would lift it: ' + esc(RAISE[low]) + "</p>" : "";
+      const options = chosen();
+      const result = outcome(options);
+      const notes = options.filter((o) => o.id !== "yes").map((o) => "<p class=\"note\">" + esc(o.note) + "</p>").join("");
       return (
-        '<section class="sheet" style="--biome:' + biome.color + '">' +
-          '<p class="sr-only">Score ' + parts.score.toFixed(1) + " out of 10. " + esc(biome.name) + ".</p>" +
-          '<p class="kicker">Herbarium · ' + esc(year) + "</p>" +
-          '<div class="result-head">' +
-            '<div class="ring-wrap">' +
-              '<svg viewBox="0 0 240 240" aria-hidden="true">' +
-                '<circle cx="120" cy="120" r="100" fill="none" stroke="rgba(243,215,166,0.15)" stroke-width="1"/>' +
-                '<circle cx="120" cy="120" r="78" fill="none" stroke="rgba(159,245,212,0.18)" stroke-width="1"/>' +
-                '<circle cx="120" cy="120" r="56" fill="none" stroke="rgba(215,242,154,0.16)" stroke-width="1"/>' +
-                '<circle class="progress" cx="120" cy="120" r="85" transform="rotate(-90 120 120)" style="--p:0"></circle>' +
-              "</svg>" +
-              '<div class="ring-label"><strong>' + parts.score.toFixed(1) + '</strong><span>out of 10</span></div>' +
-            "</div>" +
-            "<div>" +
-              '<h2>' + esc(title) + "</h2>" +
-              '<p class="biome-name"><em>' + esc(biome.name) + "</em></p>" +
-              '<p class="latin">' + esc(biome.latin) + "</p>" +
-              '<p class="poem">' + esc(biome.poem) + "</p>" +
-            "</div>" +
-          "</div>" +
-          '<ul class="notes">' + notes.map((n) => "<li>" + esc(n) + "</li>").join("") + "</ul>" +
-          '<div class="bars">' + bars + extras + "</div>" +
-          lift +
-          '<div class="share">' +
-            '<button class="btn" type="button" data-act="copy-link">Copy link</button>' +
-            '<button class="btn ghost" type="button" data-act="copy-caption">Copy caption</button>' +
-            '<button class="btn ghost" type="button" data-act="native-share">Share</button>' +
-          "</div>" +
-          '<div class="row-nav">' +
-            '<button class="texty" type="button" data-act="pick">Another phone</button>' +
-            '<button class="texty" type="button" data-act="quiz">' + (device ? "These details feel wrong" : "Answer again") + "</button>" +
-          "</div>" +
-          '<details><summary>How this number is made</summary><p>Battery 2, screen 1.6, opening 1.3, spare parts 1.6, guides 1, charge port 0.8, software 1, fasteners 0.7. A foldable keeps about three fifths of its mechanical points. If software rejects spare parts, most of the parts-and-guides credit is removed. The result is rounded to one decimal and capped at 10. Known phones use public design traits — glue, screws, parts, manuals — not a copied scorecard.</p></details>' +
-        "</section>"
+        '<p class="note">' + esc(result.line) + "</p>" +
+        notes +
+        '<div class="nav"><button class="solid" type="button" data-act="again">Start again</button><button class="texty" type="button" data-act="copy">Copy link</button></div>'
       );
     }
 
     function render() {
-      const stage = document.getElementById("stage");
-      if (state.view === "home") stage.innerHTML = renderHome();
-      else if (state.view === "pick") stage.innerHTML = renderPick();
-      else if (state.view === "quiz") stage.innerHTML = renderQuiz();
-      else stage.innerHTML = renderResult();
-
-      const device = state.phoneId ? findPhone(state.phoneId) : null;
-      if (state.view === "result") {
-        const traits = device ? device.traits : traitsFromPicks(state.picks);
-        const score = scoreOf(traits);
-        const biome = biomeFor(score);
-        document.title = (device ? device.name : "Your phone") + " · " + score.toFixed(1) + " on Zoe";
-        const ring = stage.querySelector(".progress");
-        const paint = () => { if (ring) ring.style.setProperty("--p", String(score / 10)); };
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) paint();
-        else requestAnimationFrame(() => requestAnimationFrame(paint));
-        const shareBtn = stage.querySelector('[data-act="native-share"]');
-        if (shareBtn && !navigator.share) shareBtn.hidden = true;
-      } else {
-        document.title = "Zoe — How repairable is your phone?";
-      }
-
-      const heading = stage.querySelector("h1, h2");
-      if (heading && state.view !== "pick") heading.setAttribute("tabindex", "-1");
-      if (state.view === "pick") {
-        const input = document.getElementById("q");
-        if (input) {
-          input.focus();
-          const end = input.value.length;
-          input.setSelectionRange(end, end);
-        }
-      }
+      const done = state.step >= QUESTIONS.length;
+      const result = done ? outcome(chosen()) : null;
+      document.getElementById("step").textContent = done ? "Result" : (state.step + 1) + " of " + QUESTIONS.length;
+      document.getElementById("title").textContent = done ? result.title : QUESTIONS[state.step].title;
+      document.getElementById("intro").hidden = state.step !== 0;
+      document.getElementById("stage").innerHTML = done ? renderResult() : renderQuestion();
+      document.title = done ? result.title + " — How repairable is your phone?" : "How repairable is your phone?";
     }
 
     function choose(id) {
       clearTimer();
       state.picks[state.step] = id;
       state.picks = state.picks.slice(0, state.step + 1);
-      const delay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 260;
-      state.timer = setTimeout(() => {
-        if (state.step < QUESTIONS.length - 1) go("quiz", { step: state.step + 1 });
-        else go("result", { phoneId: null });
-      }, delay);
+      const delay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 180;
+      state.timer = setTimeout(() => show(state.step + 1), delay);
       render();
-    }
-
-    function caption() {
-      const device = state.phoneId ? findPhone(state.phoneId) : null;
-      const traits = device ? device.traits : traitsFromPicks(state.picks);
-      const score = scoreOf(traits);
-      const biome = biomeFor(score);
-      const name = device ? device.name : "My phone";
-      return name + " is " + biome.name.toLowerCase() + " — " + score.toFixed(1) + "/10 on Zoe, a field guide to phone repairability.\n" + currentUrl().href;
-    }
-
-    function onClick(event) {
-      const button = event.target.closest("[data-act]");
-      if (!button) return;
-      const act = button.dataset.act;
-      if (act === "home") go("home", { phoneId: null });
-      else if (act === "pick") go("pick", { phoneId: null });
-      else if (act === "quiz") go("quiz", { step: 0, picks: [], phoneId: null });
-      else if (act === "phone") go("result", { phoneId: button.dataset.id });
-      else if (act === "brand") {
-        state.brand = button.dataset.brand;
-        const list = document.getElementById("list");
-        if (list) list.innerHTML = listHtml();
-        document.querySelectorAll("[data-act='brand']").forEach((chip) => {
-          const on = chip.dataset.brand === state.brand;
-          chip.classList.toggle("on", on);
-          chip.setAttribute("aria-pressed", on ? "true" : "false");
-        });
-      } else if (act === "choose") choose(button.dataset.id);
-      else if (act === "back") {
-        if (state.step === 0) go("home");
-        else go("quiz", { step: state.step - 1 });
-      } else if (act === "copy-link") copyText(currentUrl().href, "Link copied");
-      else if (act === "copy-caption") copyText(caption(), "Caption copied");
-      else if (act === "native-share") {
-        const device = state.phoneId ? findPhone(state.phoneId) : null;
-        navigator.share({
-          title: document.title,
-          text: caption().split("\n")[0],
-          url: currentUrl().href
-        }).catch(() => {});
-      }
     }
 
     function readUrl() {
       const params = new URLSearchParams(location.search);
-      const phoneId = params.get("phone");
-      const read = params.get("read");
-      const view = params.get("view");
-      if (phoneId && findPhone(phoneId)) {
-        state.view = "result";
-        state.phoneId = phoneId;
-        return;
-      }
-      const picks = read ? read.split(".") : [];
-      if (view === "quiz") {
-        state.view = "quiz";
-        state.step = Math.max(0, Math.min(QUESTIONS.length - 1, Number(params.get("step")) || 0));
+      const raw = params.get("a");
+      const picks = raw ? raw.split(".") : [];
+      const valid = picks.length > 0 && picks.every((id, i) => QUESTIONS[i] && QUESTIONS[i].options.some((o) => o.id === id));
+      if (valid && picks.length === QUESTIONS.length && !params.has("q")) {
+        state.step = QUESTIONS.length;
         state.picks = picks;
         return;
       }
-      if (view === "pick") {
-        state.view = "pick";
-        return;
-      }
-      if (read && picks.length === QUESTIONS.length && picks.every((id, i) => QUESTIONS[i].options.some((o) => o.id === id))) {
-        state.view = "result";
-        state.picks = picks;
-        state.phoneId = null;
+      if (params.has("q")) {
+        const step = Number(params.get("q"));
+        state.step = Number.isFinite(step) ? Math.max(0, Math.min(QUESTIONS.length - 1, step)) : 0;
+        state.picks = valid ? picks : [];
       }
     }
 
     function init() {
       readUrl();
-      document.addEventListener("click", onClick);
-      document.addEventListener("input", (event) => {
-        if (event.target.id !== "q") return;
-        state.q = event.target.value;
-        const list = document.getElementById("list");
-        if (list) list.innerHTML = listHtml();
+      document.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-act]");
+        if (!button) return;
+        const act = button.dataset.act;
+        if (act === "choose") choose(button.dataset.id);
+        else if (act === "back") { if (state.step > 0) show(state.step - 1); }
+        else if (act === "again") {
+          state.picks = [];
+          show(0);
+        }
+        else if (act === "copy") copyLink();
       });
       document.addEventListener("keydown", (event) => {
-        if (event.target.id === "q" && event.key === "Enter") {
-          const phones = filteredPhones();
-          if (phones.length === 1) go("result", { phoneId: phones[0].id });
-          return;
-        }
-        if (state.view !== "quiz") return;
-        if (event.key < "1" || event.key > "9") return;
+        if (state.step >= QUESTIONS.length) return;
+        if (event.key < "1" || event.key > "4") return;
         const option = QUESTIONS[state.step].options[Number(event.key) - 1];
         if (option) choose(option.id);
       });
       window.addEventListener("popstate", (event) => {
         clearTimer();
         const data = event.state;
-        if (!data) {
-          state.view = "home";
-          state.phoneId = null;
-          state.step = 0;
-          state.picks = [];
-        } else {
-          state.view = data.view;
-          state.step = data.step || 0;
-          state.picks = data.picks || [];
-          state.phoneId = data.phoneId || null;
-          state.brand = data.brand || "All";
-          state.q = data.q || "";
-        }
+        state.step = data ? data.step : 0;
+        state.picks = data && data.picks ? data.picks : [];
         state.replaceNext = false;
         render();
       });
       state.replaceNext = true;
-      const url = currentUrl();
-      history.replaceState(snapshot(), "", url);
+      history.replaceState(snapshot(), "", currentUrl());
       state.replaceNext = false;
       render();
     }
 
-    globalThis.ZOE = { scoreOf, scoreParts, PHONES, QUESTIONS, biomeFor, traitsFromPicks, BIOMES };
-    if (typeof document !== "undefined") init();
+    init();
   </script>
 </body>
 </html>
